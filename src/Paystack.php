@@ -58,6 +58,11 @@ class Paystack
      */
     protected $authorizationUrl;
 
+    /**
+     * Authorization URL returned from Paystack after initializing a transaction.
+     *
+     * @var string
+     */
     protected string $url;
 
     public function __construct()
@@ -70,7 +75,7 @@ class Paystack
     /**
      * Get Base Url from Paystack config file
      */
-    public function setBaseUrl()
+    public function setBaseUrl(): void
     {
         $this->baseUrl = Config::get('paystack.paymentUrl');
     }
@@ -78,7 +83,7 @@ class Paystack
     /**
      * Get secret key from Paystack config file
      */
-    public function setKey()
+    public function setKey(): void
     {
         $this->secretKey = Config::get('paystack.secretKey');
     }
@@ -86,7 +91,7 @@ class Paystack
     /**
      * Set options for making the Client request
      */
-    private function setRequestOptions()
+    private function setRequestOptions(): void
     {
         $authBearer = 'Bearer ' . $this->secretKey;
 
@@ -102,15 +107,12 @@ class Paystack
         );
     }
 
-
     /**
-
      * Initiate a payment request to Paystack
      * Included the option to pass the payload to this method for situations
      * when the payload is built on the fly (not passed to the controller from a view)
      * @return Paystack
      */
-
     public function makePaymentRequest(?array $data = null): self
     {
         if ($data == null) {
@@ -190,7 +192,7 @@ class Paystack
      * @return Paystack
      * @throws IsNullException
      */
-    private function setHttpResponse($relativeUrl, $method, $body = [])
+    private function setHttpResponse(string $relativeUrl, string $method, array $body = []): self
     {
         if (is_null($method)) {
             throw new IsNullException("Empty method not allowed");
@@ -211,9 +213,7 @@ class Paystack
     public function getAuthorizationUrl(?array $data = null): self
     {
         $this->makePaymentRequest($data);
-
         $this->url = $this->getResponse()['data']['authorization_url'];
-
         return $this;
     }
 
@@ -226,21 +226,17 @@ class Paystack
     public function getAuthorizationResponse(?array $data): array
     {
         $this->makePaymentRequest($data);
-
         $this->url = $this->getResponse()['data']['authorization_url'];
-
         return $this->getResponse();
     }
 
     /**
      * Hit Paystack Gateway to Verify that the transaction is valid
      */
-    private function verifyTransactionAtGateway($transaction_id = null)
+    private function verifyTransactionAtGateway(?string $transaction_id = null): void
     {
         $transactionRef = $transaction_id ?? request()->query('trxref');
-
         $relativeUrl = "/transaction/verify/{$transactionRef}";
-
         $this->response = $this->client->get($this->baseUrl . $relativeUrl, []);
     }
 
@@ -251,9 +247,7 @@ class Paystack
     public function isTransactionVerificationValid(?string $transaction_id = null): bool
     {
         $this->verifyTransactionAtGateway($transaction_id);
-
         $result = $this->getResponse()['message'];
-
         switch ($result) {
             case self::VS:
                 $validate = true;
@@ -285,8 +279,10 @@ class Paystack
 
     /**
      * Fluent method to redirect to Paystack Payment Page
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function redirectNow()
+    public function redirectNow(): \Illuminate\Http\RedirectResponse
     {
         return redirect($this->url);
     }
@@ -295,7 +291,7 @@ class Paystack
      * Get Access code from transaction callback respose
      * @return string
      */
-    public function getAccessCode()
+    public function getAccessCode(): string
     {
         return $this->getResponse()['data']['access_code'];
     }
@@ -304,7 +300,7 @@ class Paystack
      * Generate a Unique Transaction Reference
      * @return string
      */
-    public function genTranxRef()
+    public function genTranxRef(): string
     {
         return TransRef::getHashedToken();
     }
@@ -313,7 +309,7 @@ class Paystack
      * Get all the customers that have made transactions on your platform
      * @return array
      */
-    public function getAllCustomers()
+    public function getAllCustomers(): array
     {
         $this->setRequestOptions();
 
@@ -324,7 +320,7 @@ class Paystack
      * Get all the plans that you have on Paystack
      * @return array
      */
-    public function getAllPlans()
+    public function getAllPlans(): array
     {
         $this->setRequestOptions();
 
@@ -335,7 +331,7 @@ class Paystack
      * Get all the transactions that have happened overtime
      * @return array
      */
-    public function getAllTransactions()
+    public function getAllTransactions(): array
     {
         $this->setRequestOptions();
 
@@ -344,9 +340,10 @@ class Paystack
 
     /**
      * Get the whole response from a get operation
-     * @return array
+     *
+     * @return array|null
      */
-    private function getResponse()
+    private function getResponse(): ?array
     {
         return json_decode($this->response->getBody(), true);
     }
@@ -355,7 +352,7 @@ class Paystack
      * Get the data response from a get operation
      * @return array
      */
-    private function getData()
+    private function getData(): array
     {
         return $this->getResponse()['data'];
     }
@@ -428,7 +425,7 @@ class Paystack
 
             ];
         }
-        
+
         $this->setRequestOptions();
         return $this->setHttpResponse('/customer', 'POST', $data)->getResponse();
     }
@@ -701,10 +698,10 @@ class Paystack
         return $this->setHttpResponse("/subaccount/{$subaccount_code}", "PUT", array_filter($data))->getResponse();
     }
 
-    
+
     /**
      * Get a list of all supported banks and their properties
-     * @param $country - The country from which to obtain the list of supported banks, $per_page - Specifies how many records to retrieve per page , 
+     * @param $country - The country from which to obtain the list of supported banks, $per_page - Specifies how many records to retrieve per page ,
      * $use_cursor - Flag to enable cursor pagination on the endpoint
      * @return array
      */

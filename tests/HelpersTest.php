@@ -4,20 +4,24 @@ namespace Unicodeveloper\Paystack\Test;
 
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
+use Unicodeveloper\Paystack\Paystack;
 
-class HelpersTest extends TestCase {
-
-    protected $paystack;
+class HelpersTest extends TestCase
+{
+    protected Paystack|\Mockery\MockInterface $paystack;
+    protected \Mockery\MockInterface $mock;
 
     public function setUp(): void
     {
-        $this->paystack = m::mock('Unicodeveloper\Paystack\Paystack');
-        $this->mock = m::mock('GuzzleHttp\Client');
+        parent::setUp();
+        $this->paystack = m::mock(Paystack::class);
+        $this->mock = m::mock(\GuzzleHttp\Client::class);
     }
 
     public function tearDown(): void
     {
         m::close();
+        parent::tearDown();
     }
 
     /**
@@ -26,8 +30,8 @@ class HelpersTest extends TestCase {
      * @test
      * @return void
      */
-    function it_returns_instance_of_paystack () {
-
-        $this->assertInstanceOf("Unicodeveloper\Paystack\Paystack", $this->paystack);
+    function testReturnsInstanceOfPaystack(): void
+    {
+        $this->assertInstanceOf(Paystack::class, $this->paystack);
     }
 }

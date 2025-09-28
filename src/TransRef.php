@@ -17,10 +17,10 @@ class TransRef
 {
     /**
      * Get the pool to use based on the type of prefix hash
-     * @param  string $type
+     * @param string $type
      * @return string
      */
-    private static function getPool($type = 'alnum')
+    private static function getPool(string $type = 'alnum'): string
     {
         switch ($type) {
             case 'alnum':
@@ -42,7 +42,7 @@ class TransRef
                 $pool = '2345679ACDEFHJKLMNPRSTUVWXYZ';
                 break;
             default:
-                $pool = (string) $type;
+                $pool = (string)$type;
                 break;
         }
 
@@ -51,11 +51,12 @@ class TransRef
 
     /**
      * Generate a random secure crypt figure
-     * @param  integer $min
-     * @param  integer $max
+     * Generate a random secure integer between $min and $max - 1
+     * @param integer $min
+     * @param integer $max
      * @return integer
      */
-    private static function secureCrypt($min, $max)
+    private static function secureCrypt(int $min, int $max): int
     {
         $range = $max - $min;
 
@@ -63,10 +64,10 @@ class TransRef
             return $min; // not so random...
         }
 
-        $log    = log($range, 2);
-        $bytes  = (int) ($log / 8) + 1; // length in bytes
-        $bits   = (int) $log + 1; // length in bits
-        $filter = (int) (1 << $bits) - 1; // set all lower bits to 1
+        $log = log($range, 2);
+        $bytes = (int)($log / 8) + 1; // length in bytes
+        $bits = (int)$log + 1; // length in bits
+        $filter = (int)(1 << $bits) - 1; // set all lower bits to 1
         do {
             $rnd = hexdec(bin2hex(openssl_random_pseudo_bytes($bytes)));
             $rnd = $rnd & $filter; // discard irrelevant bits
@@ -77,13 +78,13 @@ class TransRef
 
     /**
      * Finally, generate a hashed token
-     * @param  integer $length
+     * @param integer $length
      * @return string
      */
-    public static function getHashedToken($length = 25)
+    public static function getHashedToken(int $length = 25): string
     {
         $token = "";
-        $max   = strlen(static::getPool());
+        $max = strlen(static::getPool());
         for ($i = 0; $i < $length; $i++) {
             $token .= static::getPool()[static::secureCrypt(0, $max)];
         }

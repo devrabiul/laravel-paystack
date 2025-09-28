@@ -24,11 +24,11 @@ class PaystackServiceProvider extends ServiceProvider
     protected $defer = false;
 
     /**
-    * Publishes all the config file this package needs to function
-    */
-    public function boot()
+     * Publishes all the config file this package needs to function
+     */
+    public function boot(): void
     {
-        $config = realpath(__DIR__.'/../resources/config/paystack.php');
+        $config = realpath(__DIR__ . '/../resources/config/paystack.php');
 
         $this->publishes([
             $config => config_path('paystack.php')
@@ -36,22 +36,20 @@ class PaystackServiceProvider extends ServiceProvider
     }
 
     /**
-    * Register the application services.
-    */
-    public function register()
+     * Register the application services.
+     */
+    public function register(): void
     {
         $this->app->bind('laravel-paystack', function () {
-
             return new Paystack;
-
         });
     }
 
     /**
-    * Get the services provided by the provider
-    * @return array
-    */
-    public function provides()
+     * Get the services provided by the provider
+     * @return array
+     */
+    public function provides(): array
     {
         return ['laravel-paystack'];
     }

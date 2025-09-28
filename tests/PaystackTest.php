@@ -1,56 +1,63 @@
 <?php
 
-/*
- * This file is part of the Laravel Paystack package.
- *
- * (c) Prosper Otemuyiwa <prosperotemuyiwa@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Unicodeveloper\Paystack\Test;
 
 use Mockery as m;
-use GuzzleHttp\Client;
 use PHPUnit\Framework\TestCase;
 use Unicodeveloper\Paystack\Paystack;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Facade as Facade;
 
 class PaystackTest extends TestCase
 {
-    protected $paystack;
+    protected Paystack|\Mockery\MockInterface $paystack;
 
-    public function setUp(): void
+    /**
+     * Mocked HTTP client (if needed)
+     *
+     * @var \Mockery\MockInterface|\GuzzleHttp\Client
+     */
+    protected \Mockery\MockInterface $mock;
+
+    protected function setUp(): void
     {
-        $this->paystack = m::mock('Unicodeveloper\Paystack\Paystack');
+        parent::setUp();
+
+        $this->paystack = m::mock(Paystack::class);
         $this->mock = m::mock('GuzzleHttp\Client');
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         m::close();
+        parent::tearDown();
     }
 
-    public function testAllCustomersAreReturned()
+    public function testAllCustomersAreReturned(): void
     {
-        $array = $this->paystack->shouldReceive('getAllCustomers')->andReturn(['prosper']);
+        $this->paystack->shouldReceive('getAllCustomers')->andReturn(['prosper']);
 
-        $this->assertEquals('array', gettype(array($array)));
+        $result = $this->paystack->getAllCustomers();
+
+        $this->assertIsArray($result);
+        $this->assertContains('prosper', $result);
     }
 
-    public function testAllTransactionsAreReturned()
+    public function testAllTransactionsAreReturned(): void
     {
-        $array = $this->paystack->shouldReceive('getAllTransactions')->andReturn(['transactions']);
+        $this->paystack->shouldReceive('getAllTransactions')->andReturn(['transactions']);
 
-        $this->assertEquals('array', gettype(array($array)));
+        $result = $this->paystack->getAllTransactions();
+
+        $this->assertIsArray($result);
+        $this->assertContains('transactions', $result);
     }
 
-    public function testAllPlansAreReturned()
+    public function testAllPlansAreReturned(): void
     {
-        $array = $this->paystack->shouldReceive('getAllPlans')->andReturn(['intermediate-plan']);
+        $this->paystack->shouldReceive('getAllPlans')->andReturn(['intermediate-plan']);
 
-        $this->assertEquals('array', gettype(array($array)));
+        $result = $this->paystack->getAllPlans();
+
+        $this->assertIsArray($result);
+        $this->assertContains('intermediate-plan', $result);
     }
 }
