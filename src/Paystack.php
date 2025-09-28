@@ -58,6 +58,8 @@ class Paystack
      */
     protected $authorizationUrl;
 
+    protected string $url;
+
     public function __construct()
     {
         $this->setKey();
@@ -109,7 +111,7 @@ class Paystack
      * @return Paystack
      */
 
-    public function makePaymentRequest($data = null)
+    public function makePaymentRequest(?array $data = null): self
     {
         if ($data == null) {
 
@@ -206,7 +208,7 @@ class Paystack
      * Get the authorization url from the callback response
      * @return Paystack
      */
-    public function getAuthorizationUrl($data = null)
+    public function getAuthorizationUrl(?array $data = null): self
     {
         $this->makePaymentRequest($data);
 
@@ -221,7 +223,7 @@ class Paystack
      * and might need to take different actions based on the success or not of the transaction
      * @return array
      */
-    public function getAuthorizationResponse($data)
+    public function getAuthorizationResponse(?array $data): array
     {
         $this->makePaymentRequest($data);
 
@@ -246,7 +248,7 @@ class Paystack
      * True or false condition whether the transaction is verified
      * @return boolean
      */
-    public function isTransactionVerificationValid($transaction_id = null)
+    public function isTransactionVerificationValid(?string $transaction_id = null): bool
     {
         $this->verifyTransactionAtGateway($transaction_id);
 

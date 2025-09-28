@@ -437,6 +437,20 @@ Expiry Date: any date in the future
 CVV: 883
 ```
 
+## Compatibility
+
+| Laravel Version | PHP Version |
+|-----------------|------------|
+| 6.x             | 7.2+       |
+| 7.x             | 7.2+       |
+| 8.x             | 7.2+       |
+| 9.x             | 8.0+       |
+| 10.x            | 8.0+       |
+| 11.x            | 8.1+       |
+| 12.x            | 8.2+       |
+
+> This package has been tested with Laravel 6 through 12 and PHP 7.2 through 8.4.
+
 ## Todo
 
 * Charge Returning Customers
