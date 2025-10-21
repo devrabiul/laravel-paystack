@@ -18,6 +18,16 @@
 * ✅ **Better error handling and debugging tips** — Easier troubleshooting for token expiry, invalid references, and callback issues.
 ---
 
+---
+
+## 🚀 Live Demo
+
+👉 [Try the Live Demo](https://packages.rixetbd.com/devrabiul/laravel-paystack)
+
+![Live Demo Thumbnail](https://packages.rixetbd.com/storage/app/public/package/devrabiul/laravel-paystack.webp)
+
+---
+
 ## Installation
 
 You can install this fork using:
