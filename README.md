@@ -1,4 +1,4 @@
-# laravel-paystack
+# Laravel Paystack
 
 [![Latest Stable Version](https://poser.pugx.org/unicodeveloper/laravel-paystack/v/stable.svg)](https://packagist.org/packages/unicodeveloper/laravel-paystack)
 [![License](https://poser.pugx.org/unicodeveloper/laravel-paystack/license.svg)](LICENSE.md)
@@ -6,13 +6,23 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/unicodeveloper/laravel-paystack.svg?style=flat-square)](https://scrutinizer-ci.com/g/unicodeveloper/laravel-paystack)
 [![Total Downloads](https://img.shields.io/packagist/dt/unicodeveloper/laravel-paystack.svg?style=flat-square)](https://packagist.org/packages/unicodeveloper/laravel-paystack)
 
-> A Laravel Package for working with Paystack seamlessly
+> A Laravel package for integrating **Paystack** seamlessly with your Laravel application.
+
+---
+## 🚀 What's New (2025 Update)
+
+* ✅ **Full support for Laravel 12** — Compatible with the latest Laravel version out of the box.
+* ✅ **Tested with PHP 8.4** — Ensures smooth performance and full compatibility with modern PHP features.
+* ✅ **Expanded helper methods documentation** — Includes practical examples for every Paystack helper.
+* ✅ **Example integration for Livewire and SPA apps** — Demonstrates real-time Paystack payment flows.
+* ✅ **Better error handling and debugging tips** — Easier troubleshooting for token expiry, invalid references, and callback issues.
+---
 
 ## Installation
 
 [PHP](https://php.net) 5.4+ or [HHVM](http://hhvm.com) 3.3+, and [Composer](https://getcomposer.org) are required.
 
-To get the latest version of Laravel Paystack, simply require it
+Ensure you have **PHP 8.0+** and **Composer** installed. To get the latest version of Laravel **Paystack**, simply require it
 
 ```bash
 composer require unicodeveloper/laravel-paystack
@@ -51,6 +61,22 @@ Also, register the Facade like so:
     ...
 ]
 ```
+
+---
+## Compatibility
+
+| Laravel Version | PHP Version |
+|-----------------|------------|
+| 6.x             | 7.2+       |
+| 7.x             | 7.2+       |
+| 8.x             | 7.2+       |
+| 9.x             | 8.0+       |
+| 10.x            | 8.0+       |
+| 11.x            | 8.1+       |
+| 12.x            | 8.2+       |
+
+> This package has been tested with Laravel 6 through 12 and PHP 7.2 through 8.4.
+---
 
 ## Configuration
 
@@ -429,27 +455,18 @@ In the controller that handles the request coming from the payment provider, we 
 
 `Paystack::getPaymentData()` - This function calls the verification methods and ensure it is a valid transaction else it throws an exception.
 
-You can test with these details
 
-```bash
-Card Number: 4123450131001381
-Expiry Date: any date in the future
+---
+## 🧪 Testing Payments (Sandbox)
+
+Use these test card details:
+
+```
+Card Number: 4123450131001381  
+Expiry Date: Any future date  
 CVV: 883
 ```
-
-## Compatibility
-
-| Laravel Version | PHP Version |
-|-----------------|------------|
-| 6.x             | 7.2+       |
-| 7.x             | 7.2+       |
-| 8.x             | 7.2+       |
-| 9.x             | 8.0+       |
-| 10.x            | 8.0+       |
-| 11.x            | 8.1+       |
-| 12.x            | 8.2+       |
-
-> This package has been tested with Laravel 6 through 12 and PHP 7.2 through 8.4.
+---
 
 ## Todo
 
