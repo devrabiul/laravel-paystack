@@ -20,18 +20,20 @@
 
 ## Installation
 
+You can install this fork using:
+
 [PHP](https://php.net) 5.4+ or [HHVM](http://hhvm.com) 3.3+, and [Composer](https://getcomposer.org) are required.
 
 Ensure you have **PHP 8.0+** and **Composer** installed. To get the latest version of Laravel **Paystack**, simply require it
 
 ```bash
-composer require unicodeveloper/laravel-paystack
+composer require devrabiul/laravel-paystack
 ```
 
 Or add the following line to the require block of your `composer.json` file.
 
 ```
-"unicodeveloper/laravel-paystack": "1.0.*"
+"devrabiul/laravel-paystack": "1.0.*"
 ```
 
 You'll then need to run `composer install` or `composer update` to download it and have the autoloader updated.
@@ -61,6 +63,18 @@ Also, register the Facade like so:
     ...
 ]
 ```
+
+## 🔧 About This Fork
+
+This is an **updated fork** of [unicodeveloper/laravel-paystack](https://github.com/unicodeveloper/laravel-paystack), maintained to ensure continued compatibility with modern Laravel and PHP versions.
+
+The original package is stable and widely used, but has not yet been updated for recent framework releases.
+This fork provides seamless support for:
+
+* **Laravel 12**
+* **PHP 8.4**
+* Updated dependencies and improved configuration defaults
+* Minor internal refactors for cleaner, modern Laravel conventions
 
 ---
 ## Compatibility
